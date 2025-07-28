@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from . import models, schemas, crud, auth
 import database 
 from sqlalchemy.orm import Session
@@ -18,3 +18,18 @@ def register(user: schemas.UserCreate, db: Session = Depends(auth.get_db)):
 @app.get("/protected")
 def protected(user=Depends(auth.verify_token)):
     return {"message": f"Hello {user.username}, this is a protected route!"}
+
+@app.post('/loginUser')
+def loginUser(user: schemas.Userlogin,db: Session = Depends(auth.get_db)):
+    print(user)
+    db_user = db.query(models.User).filter(models.User.username == user.username).first()
+
+    if not db_user:
+        raise HTTPException(status_code=400, detail="Invalid username or password")
+    return db_user
+
+
+
+
+    
+

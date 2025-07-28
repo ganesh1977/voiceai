@@ -18,3 +18,6 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 def get_user_by_token(db: Session, token: str):
     return db.query(models.User).filter(models.User.api_token == token).first()
+
+def loginCheck(User: schemas.Userlogin, db: Session):
+    return db.query(models.User)

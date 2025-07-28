@@ -7,3 +7,7 @@ class UserCreate(BaseModel):
 class TokenResponse(BaseModel):
     sid: str
     api_token: str
+
+class Userlogin(BaseModel):
+    username: str
+    password: str
