@@ -21,11 +21,14 @@ def protected(user=Depends(auth.verify_token)):
 
 @app.post('/loginUser')
 def loginUser(user: schemas.Userlogin,db: Session = Depends(auth.get_db)):
-    print(user)
     db_user = db.query(models.User).filter(models.User.username == user.username).first()
 
     if not db_user:
         raise HTTPException(status_code=400, detail="Invalid username or password")
+    
+    if not auth.verify_password(user.password, db_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Invalid username or password")
+    
     return db_user
 
 
