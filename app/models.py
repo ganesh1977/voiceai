@@ -1,5 +1,6 @@
 from sqlalchemy import Column,Integer, String, DateTime, func, ForeignKey
 from database import Base
+from datetime import datetime
 
 class User(Base):
     __tablename__ = "users"
@@ -43,3 +44,31 @@ class Call(Base):
     end_time = Column(String(100))
     status = Column(String(20))
     direction = Column(String(20))
+
+class CallLog(Base):
+    __tablename__ = "call_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    call_sid = Column(String(64), unique=True, index=True)
+    call_from = Column(String(20))
+    call_to = Column(String(20))
+    status = Column(String(20))
+    duration = Column(String(10), nullable=True)
+    recording_url = Column(String(255), nullable=True)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+class CallDetail(Base):
+    __tablename__ = "call_details"
+
+    id = Column(Integer, primary_key=True, index=True)
+    call_sid = Column(String(100), unique=True, nullable=False)
+    call_from = Column(String(20))
+    call_to = Column(String(20))
+    call_type = Column(String(50))
+    call_status = Column(String(50))
+    start_time = Column(String(100))
+    end_time = Column(String(100))
+    duration = Column(String(50))
+    price = Column(String(50))
+    recording_url = Column(String(500))
+    created_at = Column(DateTime, default=datetime.utcnow)

@@ -82,6 +82,7 @@ async def make_call(call: CallRequest):
             "StatusCallback": f"https://127.0.0.1:8000/call-status/{hospital_id}",
             "CustomField": f"hospital_id={hospital_id}"
         }
+        print(data)
 
         response = await client.post(
             f"{BASE_URL}/Calls/connect.json",
@@ -134,15 +135,16 @@ logger = logging.getLogger("uvicorn")
 
 @app.post("/webhook/exotel")
 async def exotel_webhook(
-    From: str = Form(),
-    To: str = Form(...),
-    CallSid: str = Form(...),
-    CallType: str = Form(None),
-    Direction: str = Form(None),
-    StartTime: str = Form(None),
-    EndTime: str = Form(None),
-    Status: str = Form(None)
+    From: str = Form("From"),
+    To: str = Form("To"),
+    CallSid: str = Form("CallSid"),
+    CallType: str = Form("CallType"),
+    Direction: str = Form("Direction"),
+    StartTime: str = Form("StartTime"),
+    EndTime: str = Form("EndTime"),
+    Status: str = Form("Status")
 ):
+    print("ganesh ganesh ganesh")
     logger.info("Exotel Webhook received: From=%s, To=%s, CallSid=%s", From, To, CallSid)
 
     # Process the data as needed
