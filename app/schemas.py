@@ -11,3 +11,14 @@ class TokenResponse(BaseModel):
 class Userlogin(BaseModel):
     username: str
     password: str
+
+class UserOut(BaseModel):
+    id: int
+    username: str
+    sid: str
+    api_token: str
+
+class Bookings(BaseModel):
+    id: int
+    type: str
+    details: str

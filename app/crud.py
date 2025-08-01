@@ -21,3 +21,14 @@ def get_user_by_token(db: Session, token: str):
 
 def loginCheck(User: schemas.Userlogin, db: Session):
     return db.query(models.User)
+
+def bookngs(db: Session, user: schemas.Bookings):    
+    db_user = models.Bookings(
+        id = user.id,
+        type = user.type,
+        details = user.details        
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
